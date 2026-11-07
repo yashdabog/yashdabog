@@ -15,10 +15,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install and run git-koi
+      - name: Download and setup git-koi binary
         run: |
-          cargo install git-koi
-          git-koi
+          # Download the latest Linux x86_64 binary release
+          curl -sL https://github.com/1yalongwastaken/git-koi/releases/latest/download/git-koi-x86_64-unknown-linux-gnu.tar.gz | tar -xz
+          chmod +x git-koi
+          ./git-koi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
