@@ -15,11 +15,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install git-koi
-        run: cargo install git-koi
-
-      - name: Run git-koi
-        run: git-koi
+      - name: Install and run git-koi
+        run: |
+          cargo install git-koi
+          git-koi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
