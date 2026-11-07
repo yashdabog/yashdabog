@@ -1,0 +1,22 @@
+name: Git Koi
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every night at midnight UTC
+  workflow_dispatch:      # Allows you to trigger it manually from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required so the action can push the generated GIF to your README
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Git Koi
+        uses: 0yalongwastaken/git-koi@main # Or specify a stable release tag
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          user_name: ${{ github.repository_owner }}
