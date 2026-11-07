@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Git Koi
-        uses: 0yalongwastaken/git-koi@main # Or specify a stable release tag
+        uses: 1yalongwastaken/git-koi@main # Or specify a stable release tag
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: ${{ github.repository_owner }}
