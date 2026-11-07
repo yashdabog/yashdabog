@@ -3,20 +3,31 @@ name: Git Koi
 on:
   schedule:
     - cron: '0 0 * * *' # Runs every night at midnight UTC
-  workflow_dispatch:      # Allows you to trigger it manually from the Actions tab
+  workflow_dispatch:      # Allows manual trigger
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required so the action can push the generated GIF to your README
-    
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run Git Koi
-        uses: 1yalongwastaken/git-koi@main # Or specify a stable release tag
+      - name: Install Rust
+        uses: dtolnay/rust-action@stable
+
+      - name: Install git-koi
+        run: cargo install git-koi
+
+      - name: Run git-koi
+        run: git-koi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit and push generated GIF
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          user_name: ${{ github.repository_owner }}
+          commit_message: "Update git-koi profile graphic"
+          file_pattern: "*.gif"
